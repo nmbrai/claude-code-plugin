@@ -39,6 +39,19 @@ Add the server to `.mcp.json` and load it by server name:
 NMBR_AGENT_TOKEN=agent:… claude --dangerously-load-development-channels server:nmbr
 ```
 
+In this mode the plugin's skills (`/nmbr:configure`, `/nmbr:access`) are NOT loaded —
+they ship with the plugin packaging, not the bare server. Configure by hand instead:
+
+```bash
+mkdir -p ~/.claude/channels/nmbr && chmod 700 ~/.claude/channels/nmbr
+printf 'NMBR_AGENT_TOKEN=%s\n' 'agent:…' > ~/.claude/channels/nmbr/.env
+cat > ~/.claude/channels/nmbr/access.json <<'JSON'
+{ "dmPolicy": "allowlist", "allowFrom": ["123-456-789"], "pending": {} }
+JSON
+```
+
+(`access.json` is re-read on every message — no restart needed after edits.)
+
 ## Who can reach the session
 
 Only people who added your agent as a contact in nmbr can message it at all; on top of that this channel keeps an allowlist of **nmbrs** in `~/.claude/channels/nmbr/access.json`, managed with `/nmbr:access` (`allow`, `remove`, `list`, `policy allowlist|open`). Someone not on the list gets a one-time note telling them who to ask, and shows up as *pending* in `/nmbr:access list`. Allowed senders can also approve permissions, so allow only people you'd trust at your keyboard.
