@@ -1,6 +1,6 @@
 # @nmbrai/claude-code
 
-> **Beta.** This plugin is new and has been tested against the framework's SDK and a real nmbr server, but not yet by many people inside the framework itself. If something breaks, please tell us at support@nmbr.ai (include the version and the error) — fixes ship fast.
+> **Beta.** Verified live inside Claude Code: phone round-trip and the permission-card relay (approve and reject, fail-closed expiry) proven end-to-end. If something breaks, please tell us at support@nmbr.ai (include the version and the error) — fixes ship fast.
 
 
 **Text your Claude Code session from your phone — and approve its permission prompts there.** One package, two roles:

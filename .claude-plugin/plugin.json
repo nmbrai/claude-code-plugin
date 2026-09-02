@@ -1,7 +1,7 @@
 {
   "name": "nmbr",
   "description": "nmbr channel for Claude Code \u2014 text your session from your phone; approve tool permissions on nmbr approval cards. Configure with /nmbr:configure, manage senders with /nmbr:access.",
-  "version": "0.1.0-beta.2",
+  "version": "0.1.0-beta.3",
   "author": {
     "name": "nmbr",
     "email": "support@nmbr.ai",
