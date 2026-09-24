@@ -29,7 +29,7 @@ Arguments passed: `$ARGUMENTS`
 
 1. Check `<state-dir>/.env` for `NMBR_AGENT_TOKEN`. Report set / not set; if set, show only the first 12 characters.
 2. Check `<state-dir>/access.json` (see /nmbr:access): report `dmPolicy` and how many nmbrs are allowed.
-3. Explain the next step: if no token, "Create an agent in the nmbr app (Agents → Yours → Create an agent), copy the token and run `/nmbr:configure agent:…`". If a token is set but nobody is allowed, "run `/nmbr:access allow <your nmbr>`". Then: restart Claude Code with `--channels plugin:nmbr@<marketplace>` (or `--dangerously-load-development-channels …` while the plugin is not on the approved list).
+3. Explain the next step: if no token, "Create an agent in the nmbr app (Agents → Yours → Create an agent), copy the token and run `/nmbr:configure agent:…`". If a token is set but nobody is allowed, "run `/nmbr:access allow <your nmbr>`". Then: restart Claude Code with `--dangerously-load-development-channels plugin:nmbr@<marketplace>` (channels are a research preview; individual accounts always use the development flag — only Team / Enterprise admins can allow the plugin through managed settings, after which `--channels plugin:nmbr@<marketplace>` works).
 
 ## With a token argument
 

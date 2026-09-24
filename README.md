@@ -20,11 +20,11 @@ Runs on Node ≥ 18 (built JavaScript; no Bun needed). Built on [`@nmbrai/sdk`](
    /nmbr:configure agent:…                       # saves ~/.claude/channels/nmbr/.env
    /nmbr:access allow 123-456-789               # your own nmbr
    ```
-3. Restart with the channel enabled:
+3. Restart with the channel enabled. Claude Code channels are a research preview: individual accounts load them with the development flag; Team and Enterprise admins can allow the plugin through managed settings, after which the plain `--channels` form works.
    ```bash
-   claude --channels plugin:nmbr@<marketplace>
-   # while the plugin is not on Anthropic's approved list (research preview):
    claude --dangerously-load-development-channels plugin:nmbr@<marketplace>
+   # Team / Enterprise, once an admin has allowed the plugin in managed settings:
+   claude --channels plugin:nmbr@<marketplace>
    ```
 4. Text your agent from the phone. Ask it to run the tests; approve the Bash permission on the card that appears.
 
