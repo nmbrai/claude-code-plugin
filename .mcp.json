@@ -2,7 +2,10 @@
   "mcpServers": {
     "nmbr": {
       "command": "npx",
-      "args": ["-y", "@nmbrai/claude-code"]
+      "args": [
+        "-y",
+        "@nmbrai/claude-code@0.1.0-beta.3"
+      ]
     }
   }
 }

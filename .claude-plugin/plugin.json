@@ -1,6 +1,6 @@
 {
   "name": "nmbr",
-  "description": "nmbr channel for Claude Code \u2014 text your session from your phone; approve tool permissions on nmbr approval cards. Configure with /nmbr:configure, manage senders with /nmbr:access.",
+  "description": "nmbr channel for Claude Code — text your session from your phone; approve tool permissions on nmbr approval cards. Configure with /nmbr:configure, manage senders with /nmbr:access.",
   "version": "0.1.0-beta.3",
   "author": {
     "name": "nmbr",
@@ -8,6 +8,8 @@
     "url": "https://nmbr.ai"
   },
   "homepage": "https://nmbr.ai/developers/docs/quickstart-claude-code/",
+  "repository": "https://github.com/nmbrai/claude-code-plugin",
+  "license": "MIT",
   "keywords": [
     "nmbr",
     "messaging",

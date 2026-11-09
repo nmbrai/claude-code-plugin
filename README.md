@@ -13,27 +13,26 @@ Runs on Node ≥ 18 (built JavaScript; no Bun needed). Built on [`@nmbrai/sdk`](
 ## Setup (Claude Code)
 
 1. In the nmbr app: **Agents → Yours → Create an agent**. Copy the token (shown once).
-2. Install the plugin and configure it:
+2. Add **nmbr** from Claude's plugin directory: on claude.ai under **Customize → Plugins → Discover**, or in Claude Code with `/plugin directory`. A plugin you add on claude.ai shows up in Claude Code at the next session start. Then configure it in Claude Code:
    ```
-   /plugin marketplace add <marketplace>        # where this plugin is listed
-   /plugin install nmbr@<marketplace>
    /nmbr:configure agent:…                       # saves ~/.claude/channels/nmbr/.env
    /nmbr:access allow 123-456-789               # your own nmbr
    ```
-3. Restart with the channel enabled. Claude Code channels are a research preview: individual accounts load them with the development flag; Team and Enterprise admins can allow the plugin through managed settings, after which the plain `--channels` form works.
+3. Restart with the channel enabled. Use the plugin's name exactly as `/plugin` lists it under **Installed** (a plugin added from the directory is listed as `nmbr@synced`). Claude Code channels are a research preview: individual accounts load them with the development flag; Team and Enterprise admins can allow the plugin through managed settings, after which the plain `--channels` form works.
    ```bash
-   claude --dangerously-load-development-channels plugin:nmbr@<marketplace>
+   claude --dangerously-load-development-channels plugin:nmbr@synced
    # Team / Enterprise, once an admin has allowed the plugin in managed settings:
-   claude --channels plugin:nmbr@<marketplace>
+   claude --channels plugin:nmbr@synced
    ```
+   If the channel does not start this way, use the bare MCP server below; it is the same server.
 4. Text your agent from the phone. Ask it to run the tests; approve the Bash permission on the card that appears.
 
-### Without a marketplace (bare MCP server)
+### Without the directory (bare MCP server)
 
 Add the server to `.mcp.json` and load it by server name:
 
 ```json
-{ "mcpServers": { "nmbr": { "command": "npx", "args": ["-y", "@nmbrai/claude-code"] } } }
+{ "mcpServers": { "nmbr": { "command": "npx", "args": ["-y", "@nmbrai/claude-code@0.1.0-beta.3"] } } }
 ```
 ```bash
 NMBR_AGENT_TOKEN=agent:… claude --dangerously-load-development-channels server:nmbr
@@ -62,6 +61,13 @@ Because nmbr authenticates every sender, there are no pairing codes: an nmbr **i
 
 When Claude Code opens a permission prompt, the channel proposes an nmbr action (`kind: claude_code.permission`, 10-minute expiry) to every allowed sender. **Approve** → `allow`; **Reject** or expiry → `deny`; first decision wins. The terminal dialog stays open too — whoever answers first wins. Typing `yes abcde` / `no abcde` in the chat also works.
 
+## What this plugin runs, stores and sends
+
+- **Runs**: one local MCP server, the npm package [`@nmbrai/claude-code`](https://www.npmjs.com/package/@nmbrai/claude-code) at the exact version pinned in `.mcp.json`, started with `npx`. Nothing else is executed, and there are no hooks.
+- **Sends**: it talks to one service, the nmbr API at `https://nmbr.ai/api` (or the base you set in `NMBR_BASE_URL`), authenticated with your agent token. To nmbr it sends the replies Claude writes with the `reply` tool, the permission requests Claude Code raises (the tool's name, the request's description and a preview of its input, shown to you as an approval card), and the calls behind the tools listed above. From nmbr it receives the messages people send to your agent.
+- **Stores**: on your machine only, under `~/.claude/channels/nmbr/`: your agent token (`.env`) and the allowlist of senders (`access.json`).
+- **Does not**: read your files or your shell environment beyond the three variables below, change Claude Code's permission settings, or contact any other host.
+
 ## Environment
 
 | Variable | Meaning |
@@ -76,9 +82,8 @@ Docs: https://nmbr.ai/developers/docs/ · Issues: support@nmbr.ai
 
 ## About this repository
 
-This is the **distribution mirror** for the nmbr Claude Code plugin, submitted to the
-`claude-community` marketplace. The source of truth lives in the nmbr monorepo; the
+This is the **distribution mirror** for the nmbr Claude Code plugin, submitted to
+Anthropic's plugin directory. The source of truth lives in the nmbr monorepo; the
 MCP server itself ships as [`@nmbrai/claude-code`](https://www.npmjs.com/package/@nmbrai/claude-code)
-on npm — this repo's `.mcp.json` launches it with `npx -y @nmbrai/claude-code`, so
-installs always resolve the current published server with its dependencies. Issues:
-support@nmbr.ai.
+on npm. This repo's `.mcp.json` launches it with `npx -y @nmbrai/claude-code@0.1.0-beta.3`:
+an exact version, raised here with every release. Issues: support@nmbr.ai.
